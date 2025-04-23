@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<script>
-	function fn() {
-		
-		console.log(myname.value);
-		console.log(age.value);
-		
-		requestData = {name:myname.value, age:age.value}
-		
-		fetch('/api/person', {
-			method: 'POST'
-			, headers: {
-				'Content-Type' : 'application/json'
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script>
+
+			function resultFn(data)
+			{
+				console.log( data)
+				show.innerHTML = `<h3>이름:${data.name} 나이:${data.age} 입력됨</h3>`
 			}
-			, body : JSON.stringify(requestData)
-		})
-		.then(response => response.json())
-		.then(data => resultFn(data))
-	}
-	
-	function resultFn(data) {
-		show.innerHTML = `<h3> 이름 : ${data.name} / 나이 : ${data.age} 입력됨 </h3>`
-	}
-</script>
-<body>
-	<h1>REST PROJECT INSERT PAGE</h1>
-	<label>이름 : </label> <input type="text" id="myname"> <br>
-	<label>나이 : </label> <input type="number" id="age"> <br>
-	<button onclick="fn()">입력</button>
-	
-	<hr>
-	
-	<div id="show">
-	
-	</div>
-	
-</body>
+			function fn()
+			{
+/* 				myname = document.getElmentById('name')
+				myname.value = '홍길동' */
+				//myname.value = '홍길동'
+				//age.value = 30
+				personData = { name:myname.value, age:age.value }
+				fetch('/api/persons', {
+					method:'POST',
+					headers:{
+						'Content-Type':'application/json'
+					},
+					body: JSON.stringify( personData )
+				})
+				.then( response => response.json() )
+				.then( data=> resultFn( data ) )
+			}
+		</script>
+	</head>
+	<body>
+		<h1>입력</h1>
+		<hr>
+			<label>이름:</label>
+			<input id="myname" type="text"><br>
+			<label>나이:</label>
+			<input id="age" type="number"><br>
+			<button onclick="fn()">입력</button>
+		<hr>
+		<div id="show"></div>
+	</body>
 </html>

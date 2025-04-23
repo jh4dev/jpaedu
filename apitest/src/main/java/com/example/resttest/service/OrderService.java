@@ -2,28 +2,25 @@ package com.example.resttest.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.resttest.model.Order;
+import com.example.resttest.model.Person;
 import com.example.resttest.repository.OrderRepository;
 
 @Service
 public class OrderService {
 
-	private final OrderRepository orderRepository;
+	@Autowired
+	private OrderRepository orderRepository;
 
-	public OrderService(OrderRepository orederRepository) {
-		super();
-		this.orderRepository = orederRepository;
-	}
-	
 	public List<Order> getAllOrders(){
-		
 		return orderRepository.findAll();
 	}
-	
-	public Order insertOrder(Order order) {
-		
+
+	public Order saveOrder( Order order) {
+		System.out.println(order);
 		return orderRepository.save(order);
 	}
 }

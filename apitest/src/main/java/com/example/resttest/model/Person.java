@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.hibernate.annotations.BatchSize;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -25,21 +24,25 @@ import lombok.Setter;
 public class Person {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "person_id")
-	private long id;
-	
+	@GeneratedValue( strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	private String name;
-	
 	private int age;
-	
-	
-	//BatchSize => N + 1 문제를 줄이기 위해, 일괄 조회 시 한 번에 10개까지 가져오도록 설정
-	/*
-	 * What is N + 1 Problem?
-	 * 1: N 구조에서 1 에 대한 데이터 조회 시, 개선 로직이 없다면 N + 1 회 쿼리가 수행됨
-	 * */
-	@OneToMany(mappedBy="person", fetch=FetchType.LAZY)
-	@BatchSize(size = 10)
-	private List<Order> orders = new ArrayList<>();
+
+	// 필요할 때만 주문 목록을 조회해서 성능 최적화
+	//@BatchSize(size = 10): N+1 문제를 줄이기 위해 일괄 조회할 때 한 번에 최대 10개까지 가져옴
+	//
+//	배치 사이즈: 20
+//	Hibernate는 내부적으로 다음과 같은 식으로 묶음 그룹을 만들어 둡니다:
+//	1 ~ 20번 → 첫 번째 IN 쿼리
+//	21 ~ 40번 → 두 번째 IN 쿼리
+//	41 ~ 60번 → 세 번째 IN 쿼리 ← 60번 포함됨
+//	61 ~ 80번 → 네 번째 IN 쿼리
+//	81 ~ 100번 → 다섯 번째 IN 쿼리
+
+	@OneToMany( mappedBy = "person", fetch= FetchType.LAZY)
+	@BatchSize( size=10)
+	private List<Order> orders = new ArrayList<Order>();
+
 }

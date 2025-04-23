@@ -1,14 +1,14 @@
 package com.example.resttest.controller;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
@@ -16,48 +16,58 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 @Controller
 public class UserController {
 
-//	@GetMapping
-//	public String index() {
-//		return "index";
-//	}
-	
-	@GetMapping
+
+	@GetMapping("/")
 	@Cacheable(value = "homeCache", key = "'home'")
 	@Async
-	public CompletableFuture<String> index() {
+	public CompletableFuture<String> index( Model model) {
 		return CompletableFuture.completedFuture("index");
 	}
-	
-	@GetMapping("/insert")
-	public String insert() {
-		return "insert";
+
+	@GetMapping("/test")
+	public String test( Model model) {
+		return "test";
 	}
-	
-	@GetMapping("/update")
-	public String update() {
-		return "update";
+
+	@GetMapping("/form")
+	public String form( Model model) {
+		return "form";
 	}
-	
-	@GetMapping("/delete")
-	public String delete() {
-		return "delete";
-	}
-	
+
 	@GetMapping("/personview")
-	public String personview(Model model) {
+	public String personview( Model model) {
 		return "personview";
 	}
-	
+
+	@GetMapping("/insert")
+	public String insert( Model model) {
+		return "insert";
+	}
+
+	@GetMapping("/update")
+	public String update( Model model) {
+		return "update";
+	}
+
+	@GetMapping("/delete")
+	public String delete( Model model) {
+		return "delete";
+	}
 	@GetMapping("/order")
-	public String order(Model model) {
+	public String order( Model model) {
 		return "order";
 	}
-	
-	@GetMapping("/large-json")
+
+    //server.compression.min-response-size=1KB 1KB 이상일 때만 압축
+    // f12 네트워크에서 수신 json 클릭후 헤더에 gzip 압축 확인
+
+    @GetMapping("/large-json")
     @ResponseBody
     public List<Map<String, Object>> getLargeJson() {
         List<Map<String, Object>> list = new ArrayList<>();
@@ -70,8 +80,8 @@ public class UserController {
         }
         return list;
     }
-	
-	@GetMapping("/stream")
+
+    @GetMapping("/stream")
     @ResponseBody
     public ResponseEntity<StreamingResponseBody> streamData() {
 
@@ -91,9 +101,9 @@ public class UserController {
                 .headers(headers)
                 .body(stream);
     }
-	
-	@GetMapping("/test")
-	public String test() {
-		return "test";
-	}
+
 }
+
+
+
+

@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<script>
-	function fn() {
-		
-		console.log(personId.value);
-		requestData = {personId : personId.value, productName : productName.value, price : price.value}
-		
-		fetch('/api/order', {
-			method: 'POST'
-			, headers: {
-				'Content-Type' : 'application/json'
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script>
+
+			function resultFn(data)
+			{
+				console.log( data)
+				show.innerHTML = `입력됨`
 			}
-			, body : JSON.stringify(requestData)
-		})
-		.then(response => response.json())
-		.then(data => resultFn(data))
-	}
-	
-	function resultFn(data) {
-	}
-</script>
-<body>
-	<h1>REST PROJECT ORDER PAGE</h1>
-	<label>고객 ID : </label> <input type="number" id="personId"> <br>
-	<label>제품명 : </label> <input type="text" id="productName"> <br>
-	<label>가격 : </label> <input type="number" id="price"> <br>
-	<button onclick="fn()">주문</button>
-	
-	<hr>
-	
-	<div id="show">
-	
-	</div>
-	
-</body>
+			function fn()
+			{
+
+				orderData = { person:{id:personId.value},
+						productName:productName.value, price: price.value }
+
+				console.log( orderData )
+				fetch('/api/orders', {
+					method:'POST',
+					headers:{
+						'Content-Type':'application/json'
+					},
+					body: JSON.stringify( orderData )
+				})
+				.then( response => response.json() )
+				.then( data=> resultFn( data ) )
+			}
+		</script>
+	</head>
+	<body>
+		<h1>주문</h1>
+		<hr>
+			<label>고객아이디:</label>
+			<input id="personId" type="number"><br>
+			<label>상품명:</label>
+			<input id="productName" type="text"><br>
+			<label>가격:</label>
+			<input id="price" type="number"><br>
+			<button onclick="fn()">주문</button>
+		<hr>
+		<div id="show"></div>
+	</body>
 </html>

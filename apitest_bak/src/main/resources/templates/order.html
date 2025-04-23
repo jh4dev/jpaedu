@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	function fn() {
+		
+		console.log(personId.value);
+		requestData = {personId : personId.value, productName : productName.value, price : price.value}
+		
+		fetch('/api/order', {
+			method: 'POST'
+			, headers: {
+				'Content-Type' : 'application/json'
+			}
+			, body : JSON.stringify(requestData)
+		})
+		.then(response => response.json())
+		.then(data => resultFn(data))
+	}
+	
+	function resultFn(data) {
+	}
+</script>
+<body>
+	<h1>REST PROJECT ORDER PAGE</h1>
+	<label>고객 ID : </label> <input type="number" id="personId"> <br>
+	<label>제품명 : </label> <input type="text" id="productName"> <br>
+	<label>가격 : </label> <input type="number" id="price"> <br>
+	<button onclick="fn()">주문</button>
+	
+	<hr>
+	
+	<div id="show">
+	
+	</div>
+	
+</body>
+</html>

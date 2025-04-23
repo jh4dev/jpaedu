@@ -3,6 +3,7 @@ package com.example.resttest.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -13,32 +14,27 @@ import com.example.resttest.repository.PersonRepository;
 @Service
 public class PersonService {
 
-	private final PersonRepository personRepository;
+	@Autowired
+	private PersonRepository personRepository;
 
-	public PersonService(PersonRepository personRepository) {
-		super();
-		this.personRepository = personRepository;
-	}
-	
+
 	@Cacheable("persons")
-	public List<Person> getAllPerson() {
+	public List<Person> getAllPersons(){
 		return personRepository.findAll();
 	}
-	
-	public Optional<Person> getPerson(long id) {
+
+	public Optional<Person>  getPersonById( Long id){
 		return personRepository.findById(id);
 	}
-	
-	// 캐시무효화
-	// CUD 트랜잭션 이후 READ 캐시를 초기화
+
 	@CacheEvict(value = "persons", allEntries = true)
-	public Person savePerson(Person person) {
+	public Person savePerson( Person person) {
 		return personRepository.save(person);
 	}
-	
+
 	@CacheEvict(value = "persons", allEntries = true)
-	public void deletePerson(long id) {
+	public void deletePerson( Long id)
+	{
 		personRepository.deleteById(id);
 	}
-	
 }

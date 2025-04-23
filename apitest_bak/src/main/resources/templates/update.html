@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	function fn() {
+		
+		console.log(myname.value);
+		console.log(age.value);
+		
+		requestData = {name:myname.value, age:age.value}
+		
+		fetch('/api/person/1', {
+			method: 'PUT'
+			, headers: {
+				'Content-Type' : 'application/json'
+			}
+			, body : JSON.stringify(requestData)
+		})
+		.then(response => response.json())
+		.then(data => resultFn(data))
+	}
+	
+	function resultFn(data) {
+		show.innerHTML = `<h3> 이름 : ${data.name} / 나이 : ${data.age} 수정됨 </h3>`
+	}
+</script>
+<body>
+	<h1>REST PROJECT INSERT PAGE</h1>
+	<label>이름 : </label> <input type="text" id="myname"> <br>
+	<label>나이 : </label> <input type="number" id="age"> <br>
+	<button onclick="fn()">입력</button>
+	
+	<hr>
+	
+	<div id="show">
+	
+	</div>
+	
+</body>
+</html>
