@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+</script>
+<body>
+<div>
+
+	<div align="center">
+		키 : <span th:text="${obesity.height}"></span> <br>
+		몸무게 : <span th:text="${obesity.weight}"></span> <br>
+		결과 : 
+		<span th:if="${obesity.obesity <= 90}">
+			<span>저체중</span>
+			<br>
+			<img src="/img/under.png">
+		</span>
+		<span th:if="${obesity.obesity > 90 and obesity.obesity <= 110}">
+			<span>정상</span>
+			<br>
+			<img src="/img/normal.png">
+		</span>
+		<span th:if="${obesity.obesity > 110 and obesity.obesity <= 120}">
+			<span>과체중</span>
+			<br>
+			<img src="/img/over.png">
+		</span>
+		<span th:if="${obesity.obesity >= 120}">
+			<span>비만</span>
+			<br>
+			<img src="/img/obese.png">
+		</span>
+	</div>
+</div>
+</body>
+</html>

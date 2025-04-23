@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS product (
+    name VARCHAR(255) NOT NULL,
+    price DOUBLE NOT NULL
+);

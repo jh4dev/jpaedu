@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>div test01</div>
+	<div>div test02</div>
+	
+	<div>Hello: <span th:text="${hello}"></span></div>
+	
+	<div th:if="${user == 'Ahn'}">
+		<div>My Name Is <span th:text="${user}"></span></div>
+	</div>
+	<div th:if="${user != 'Ahn'}">
+		I don't know who I am.
+	</div>
+	<div th:switch="${user}">
+		<div th:case="Park">PARK</div>
+		<div th:case="Lee">LEE</div>
+		<div th:case="*">ETC.</div>
+	</div>
+	
+	<ul>
+		<li th:each="movie :${movies}">
+			<img th:src="${movie.poster}" width="200" heignt="200">
+			<span th:text="${movie.title}"></span> - <span th:text="${movie.director}"></span>
+		</li>
+	</ul>
+</body>
+</html>

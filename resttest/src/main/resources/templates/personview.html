@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>Person Data</h1>
+	<button onclick="callperson()">확인</button>
+	
+	<table>
+		<thead>
+			<tr><th>이름</th><th>나이</th></tr>
+		</thead>
+		<tbody id="useTableBody">
+			<tr><td></td></tr>
+		</tbody>
+	</table>
+</body>
+<script>
+	
+	function renderTable(data) {
+		tbody = document.getElementById("useTableBody");
+		tbody.innerHTML = '';
+		
+		console.log(data);
+		for(d of data) {
+			console.log(d);
+			tr = document.createElement('tr')
+			tr.innerHTML = `
+				<td>${d.name} </td>
+				<td>${d.age} </td>
+			`;
+			
+			tbody.appendChild(tr);
+		}
+	}
+	
+	function callperson() {
+		fetch("/api/person")
+		.then(res => res.json())
+		.then(data => renderTable(data))
+	}
+	
+</script>
+</html>
+
+
