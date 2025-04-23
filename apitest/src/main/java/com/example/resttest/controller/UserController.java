@@ -91,4 +91,9 @@ public class UserController {
                 .headers(headers)
                 .body(stream);
     }
+	
+	@GetMapping("/test")
+	public String test() {
+		return "test";
+	}
 }
